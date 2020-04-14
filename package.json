@@ -1,0 +1,16 @@
+{
+  "name": "checkout-netlify-serverless",
+  "version": "0.0.1",
+  "main": "index.js",
+  "contributors": [
+    "Jason Lengstorf <jason@lengstorf.com>",
+    "Thor 雷神 <thorsten@stripe.com>"
+  ],
+  "scripts": {
+    "functions": "cd functions && npm i && cd ..",
+    "dev": "netlify dev",
+    "webhook": "stripe listen --forward-to localhost:8888/.netlify/functions/handle-purchase"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}

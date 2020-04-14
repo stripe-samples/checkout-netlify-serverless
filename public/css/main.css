@@ -1,0 +1,70 @@
+body {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  margin: 0;
+}
+
+header {
+  background: teal;
+  padding: 1rem 5vw;
+}
+
+header a {
+  color: white;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+main {
+  margin: 4rem auto 6rem;
+  max-width: 650px;
+  width: 90vw;
+}
+
+footer {
+  color: #444;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+footer a {
+  color: inherit;
+}
+
+.products {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 3rem;
+}
+
+.product img {
+  max-width: 100%;
+}
+
+.product form {
+  align-items: baseline;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 70px 50px 1fr;
+}
+
+.product input {
+  border: 1px solid teal;
+  border-radius: 0.25rem;
+  font-size: 1.125rem;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+}
+
+.product button {
+  background: teal;
+  border: none;
+  border-radius: 0.25rem;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.25rem;
+  padding: 0.25rem;
+}

@@ -1,0 +1,9 @@
+[build]
+  command = "npm run functions"
+  publish = "public"
+  functions = "functions"
+
+[template.environment]
+  STRIPE_PUBLISHABLE_KEY = "Add your Stripe publishable key here: pk_test_xxx"
+  STRIPE_SECRET_KEY = "Add your Stripe secret key here: sk_test_xxx"
+  STRIPE_WEBHOOK_SECRET = "Add your webhook secret here: whsec_xxx"

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stripe Checkout Jamstack Example</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/" rel="home">Serverless Workflow for Stripe Checkout</a>
+    </header>
+
+    <main>
+      <h1>Buy Our Products!</h1>
+      <p>
+        This demo is in test mode. That means you can check out using any of the
+        <a href="https://stripe.com/docs/testing#cards">test card numbers</a>.
+      </p>
+      <section class="products"></section>
+    </main>
+
+    <footer>
+      <p>
+        Based on an 
+        <a href="https://www.learnwithjason.dev/sell-products-on-the-jamstack">
+          episode of <em>Learn With Jason</em>
+        </a> ·
+        <a href="https://jason.af/egghead/stripe-products">
+          watch the video course
+        </a> ·
+        <a href="#TKTK-tutorial-link">read the tutorial</a> ·
+        <a href="https://github.com/stripe-samples/checkout-netlify-serverless">
+          source code
+        </a>
+      </p>
+    </footer>
+
+    <template id="product">
+      <div class="product">
+        <img src="" alt="" />
+        <h2>name</h2>
+        <p class="description">description</p>
+        <p class="price">price</p>
+        <form action="/.netlify/functions/create-checkout" method="post">
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value="1"
+            min="1"
+            max="10"
+          />
+          <input type="hidden" name="sku" value="" />
+          <button type="submit">Buy Now</button>
+        </form>
+      </div>
+    </template>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      function format(amount, currency) {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency,
+        }).format((amount / 100).toFixed(2));
+      }
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+        const form = new FormData(event.target);
+
+        const data = {
+          sku: form.get('sku'),
+          quantity: Number(form.get('quantity')),
+        };
+
+        const response = await fetch('/.netlify/functions/create-checkout', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((res) => res.json());
+
+        const stripe = Stripe(response.publishableKey);
+        const { error } = await stripe.redirectToCheckout({
+          sessionId: response.sessionId,
+        });
+
+        if (error) {
+          console.error(error);
+        }
+      }
+
+      async function loadProducts() {
+        if (!'content' in document.createElement('template')) {
+          console.error('Your browser doesn’t support HTML template elements.');
+          return;
+        }
+
+        const data = await fetch('/.netlify/functions/get-products')
+          .then((res) => res.json())
+          .catch((err) => console.error(err));
+
+        const products = document.querySelector('.products');
+        const template = document.querySelector('#product');
+
+        data.forEach((product) => {
+          const container = template.content.cloneNode(true);
+
+          container.querySelector('h2').innerText = product.name;
+          container.querySelector('.description').innerText =
+            product.description;
+          container.querySelector('.price').innerText = format(
+            product.amount,
+            product.currency
+          );
+          container.querySelector('[name=sku]').value = product.sku;
+
+          const img = container.querySelector('img');
+          img.src = product.image;
+          img.alt = product.name;
+
+          const form = container.querySelector('form');
+          form.addEventListener('submit', handleSubmit);
+
+          products.appendChild(container);
+        });
+      }
+
+      loadProducts();
+    </script>
+  </body>
+</html>
