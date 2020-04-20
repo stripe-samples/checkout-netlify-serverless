@@ -29,24 +29,6 @@ Follow the steps below to run locally.
 
 **1. Clone and configure the sample**
 
-The Stripe CLI is the fastest way to clone and configure a sample to run locally.
-
-**Using the Stripe CLI**
-
-If you haven't already installed the CLI, follow the [installation steps](https://github.com/stripe/stripe-cli#installation) in the project README. The CLI is useful for cloning samples and locally testing webhooks and Stripe integrations.
-
-In your terminal shell, run the Stripe CLI command to clone the sample:
-
-```
-stripe samples create checkout-netlify-serverless
-```
-
-The CLI will walk you through picking your integration type, server and client languages, and configuring your .env config file with your Stripe API keys.
-
-**Installing and cloning manually**
-
-If you do not want to use the Stripe CLI, you can manually clone and configure the sample yourself:
-
 ```
 git clone https://github.com/stripe-samples/checkout-netlify-serverless
 ```
