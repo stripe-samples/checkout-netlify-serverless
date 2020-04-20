@@ -1,0 +1,11 @@
+{
+  "name": "checkout-netlify-serverless",
+  "configureDotEnv": false,
+  "integrations": [
+    {
+      "name": "main",
+      "clients": [],
+      "servers": []
+    }
+  ]
+}
