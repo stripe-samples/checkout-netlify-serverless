@@ -36,7 +36,7 @@ git clone https://github.com/stripe-samples/checkout-netlify-serverless
 Copy the .env.example file into a file named .env in the functions folder. For example:
 
 ```
-cp functions/.env.example functions/.env
+cp .env.example .env
 ```
 
 You will need a Stripe account in order to run the demo. Once you set up your account, go to the Stripe [developer dashboard](https://stripe.com/docs/development#api-keys) to find your API keys.
