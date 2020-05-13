@@ -48,6 +48,19 @@ exports.handler = async (event) => {
         quantity: validatedQuantity,
       },
     ],
+    // We are using the metadata to track which items were purchased.
+    // We can access this meatadata in our webhook handler to then handle
+    // the fulfillment process.
+    // In a real application you would track this in an order object in your database.
+    metadata: {
+      items: JSON.stringify([
+        {
+          sku: product.sku,
+          name: product.name,
+          quantity: validatedQuantity,
+        },
+      ]),
+    },
   });
 
   return {
