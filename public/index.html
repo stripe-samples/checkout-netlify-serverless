@@ -22,14 +22,20 @@
 
     <footer>
       <p>
-        Based on an 
+        Based on an
         <a href="https://www.learnwithjason.dev/sell-products-on-the-jamstack">
           episode of <em>Learn With Jason</em>
-        </a> ·
+        </a>
+        ·
         <a href="https://jason.af/egghead/stripe-products">
           watch the video course
-        </a> ·
-        <a href="https://www.netlify.com/blog/2020/04/13/learn-how-to-accept-money-on-jamstack-sites-in-38-minutes/?utm_source=demo&utm_medium=stripe-checkout-jamstack-jl&utm_campaign=devex">read the tutorial</a> ·
+        </a>
+        ·
+        <a
+          href="https://www.netlify.com/blog/2020/04/13/learn-how-to-accept-money-on-jamstack-sites-in-38-minutes/?utm_source=demo&utm_medium=stripe-checkout-jamstack-jl&utm_campaign=devex"
+          >read the tutorial</a
+        >
+        ·
         <a href="https://github.com/stripe-samples/checkout-netlify-serverless">
           source code
         </a>
@@ -69,8 +75,11 @@
 
       async function handleSubmit(event) {
         event.preventDefault();
-        const form = new FormData(event.target);
+        document
+          .querySelectorAll('button')
+          .forEach((button) => (button.disabled = true));
 
+        const form = new FormData(event.target);
         const data = {
           sku: form.get('sku'),
           quantity: Number(form.get('quantity')),
@@ -90,6 +99,9 @@
         });
 
         if (error) {
+          document
+            .querySelectorAll('button')
+            .forEach((button) => (button.disabled = false));
           console.error(error);
         }
       }

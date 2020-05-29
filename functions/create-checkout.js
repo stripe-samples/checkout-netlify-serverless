@@ -27,6 +27,7 @@ exports.handler = async (event) => {
   const validatedQuantity = quantity > 0 && quantity < 11 ? quantity : 1;
 
   const session = await stripe.checkout.sessions.create({
+    mode: 'payment',
     payment_method_types: ['card'],
     billing_address_collection: 'auto',
     shipping_address_collection: {
@@ -43,11 +44,15 @@ exports.handler = async (event) => {
     cancel_url: process.env.URL,
     line_items: [
       {
-        name: product.name,
-        description: product.description,
-        images: [product.image],
-        amount: product.amount,
-        currency: product.currency,
+        price_data: {
+          currency: 'usd',
+          unit_amount: product.amount,
+          product_data: {
+            name: product.name,
+            description: product.description,
+            images: [product.image],
+          },
+        },
         quantity: validatedQuantity,
       },
     ],
