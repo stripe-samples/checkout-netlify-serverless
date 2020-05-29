@@ -68,3 +68,8 @@ footer a {
   line-height: 1.25rem;
   padding: 0.25rem;
 }
+
+.product button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

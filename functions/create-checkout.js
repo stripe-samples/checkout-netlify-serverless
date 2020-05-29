@@ -46,12 +46,12 @@ exports.handler = async (event) => {
       {
         price_data: {
           currency: 'usd',
+          unit_amount: product.amount,
           product_data: {
             name: product.name,
             description: product.description,
             images: [product.image],
           },
-          unit_amount: product.amount,
         },
         quantity: validatedQuantity,
       },
